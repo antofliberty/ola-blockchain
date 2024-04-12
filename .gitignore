@@ -8,3 +8,4 @@ out/
 node_modules/
 coverage/
 .env
+src/**/*.js
