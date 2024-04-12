@@ -1,8 +1,8 @@
 import {describe, expect} from '@jest/globals';
-import {GENESIS_DATA, MINE_RATE} from "../config";
-import Block from '../block';
-import {createHash} from "../crypto";
-import {hexToBinary} from "../utils";
+import {GENESIS_DATA, MINE_RATE} from "../src/config";
+import Block from '../src/block';
+import {createHash} from "../src/crypto";
+import {hexToBinary} from "../src/utils";
 
 describe('genesis()', (): void => {
     const genesisBlock: Block = Block.genesis();

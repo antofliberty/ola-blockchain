@@ -8,12 +8,18 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "npx ts-node simulation.ts",
-    "test": "jest"
+    "simulation": "npx ts-node src/simulation.ts",
+    "test": "jest",
+    "start": "nodemon src/index.ts"
   },
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.19.2",
+    "redis": "^4.6.13"
+  },
   "devDependencies": {
+    "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
+    "@types/node": "^20.12.5",
     "jest": "^29.7.0",
     "nodemon": "^3.1.0",
     "ts-jest": "^29.1.2",

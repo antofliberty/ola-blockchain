@@ -1,6 +1,8 @@
 import {describe, expect} from "@jest/globals";
-import {Blockchain} from "../blockchain";
-import Block from "../block";
+import {Blockchain} from "../src/blockchain";
+import Block from "../src/block";
+import {createHash} from "../src/crypto";
+import {INITIAL_DIFFICULTY} from "../src/config";
 
 
 describe('isValidChain()', (): void => {
@@ -21,6 +23,26 @@ describe('isValidChain()', (): void => {
         })
 
         expect(blockchain.isValidChain(blockchain.chain)).toEqual(true)
+    })
+
+    it('Prevents difficulty jump', (): void => {
+
+        const timestamp: number = Date.now()
+        const data: string = 'newData'
+        const lastHash: string = blockchain.chain[0].hash
+        const nonce: number = 0
+        const difficulty: number = INITIAL_DIFFICULTY - 2
+
+        blockchain.chain[1] = new Block({
+            timestamp,
+            data,
+            nonce,
+            lastHash,
+            hash: createHash(timestamp, data, nonce, lastHash, difficulty),
+            difficulty
+        })
+
+        expect(blockchain.isValidChain(blockchain.chain)).toEqual(false)
     })
 
 })

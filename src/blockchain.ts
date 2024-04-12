@@ -27,13 +27,19 @@ export class Blockchain {
     }
 
     isValidChain(chain: Block[]): boolean {
+
         if (JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) {
             return false
         }
 
         for (let i = 1; i < chain.length; i++) {
+
             const lastHashAndHashEqual: boolean = chain[i].lastHash === chain[i - 1].hash
             if (!lastHashAndHashEqual) {
+                return false
+            }
+
+            if (chain[i - 1].difficulty - chain[i].difficulty > 1) {
                 return false
             }
         }

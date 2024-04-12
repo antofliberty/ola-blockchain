@@ -13,17 +13,17 @@ export interface BlockConstructorArgs {
 
 class Block {
     timestamp: number
-    // private data: string
+    private data: string
     lastHash: string
     hash: string
     nonce: number
     difficulty: number
 
-    constructor({ timestamp, lastHash, hash, nonce, difficulty }: BlockConstructorArgs) {
+    constructor({ timestamp, lastHash, hash, data, nonce, difficulty }: BlockConstructorArgs) {
         this.timestamp = timestamp
         this.lastHash = lastHash
         this.hash = hash
-        // this.data = data
+        this.data = data
         this.nonce = nonce
         this.difficulty = difficulty
     }

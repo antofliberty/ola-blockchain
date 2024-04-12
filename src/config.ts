@@ -1,6 +1,6 @@
 import {BlockConstructorArgs} from "./block"
 
-export const INITIAL_DIFFICULTY: number = 18
+export const INITIAL_DIFFICULTY: number = 3 // Must be >= 3
 export const MINE_RATE: number = 3000
 
 export const GENESIS_DATA: BlockConstructorArgs = {
