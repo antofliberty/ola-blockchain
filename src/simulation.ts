@@ -1,7 +1,7 @@
 import {Blockchain} from "./blockchain";
 import Block from "./block";
 
-const SIMULATION_ITERATIONS: number = 7
+const SIMULATION_ITERATIONS: number = 20
 
 const blockchain: Blockchain = new Blockchain()
 

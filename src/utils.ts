@@ -1,3 +1,7 @@
+import {createHash, ec} from "./crypto";
+import {Transaction} from "./transaction";
+import {Wallet} from "./wallet";
+
 export function hexToBinary(hexString: string): string {
     // A map of hex digit to binary string
     const hexToBinMap: { [key: string]: string } = {
@@ -21,4 +25,30 @@ export function hexToBinary(hexString: string): string {
     }
 
     return binaryString;
+}
+
+type VerifySignatureArgs = {
+    publicKey: string,
+    data: string,
+    signature: string
+}
+
+let transaction: Transaction
+let sender: Wallet
+let recipient: string
+let amount: number
+
+sender = new Wallet()
+recipient = 'recipient'
+amount = 100
+
+transaction = new Transaction({ sender, recipient, amount })
+
+console.log(verifySignature({ publicKey: sender.publicKey, data: 'testData', signature: sender.sign('testData')}))
+
+
+export function verifySignature({ publicKey, data, signature }: VerifySignatureArgs) {
+    const keyFromPublic = ec.keyFromPublic(publicKey, 'hex')
+
+    return keyFromPublic.verify(createHash(data), signature)
 }
