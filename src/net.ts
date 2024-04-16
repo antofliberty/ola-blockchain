@@ -6,7 +6,7 @@ const CHANNELS = {
     BLOCKCHAIN: 'BLOCKCHAIN'
 };
 
-export class PubSub {
+export class Net {
     public publisher;
     public subscriber;
     blockchain: Blockchain

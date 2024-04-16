@@ -1,5 +1,6 @@
 import {randomUUID} from "crypto";
 import {Wallet} from "./wallet";
+import {verifySignature} from "./utils";
 
 type OutputMapArgs = {
     sender: Wallet,
@@ -17,7 +18,7 @@ type TransactionInput =  {
 }
 
 export type OutputMap = {
-    [key: string]: string | number,
+    [key: string]: number,
 }
 
 export class Transaction {
@@ -49,7 +50,31 @@ export class Transaction {
             timestamp: Date.now(),
             amount: sender.balance,
             address: sender.publicKey,
-            signature: sender.sign(JSON.stringify(outputMap))
+            signature: sender.sign(outputMap)
         }
+    }
+
+    validate(transaction: Transaction): boolean {
+        const { input: { address, amount, signature }, outputMap, id } = transaction
+
+        const outputTotal: number = Object.values(outputMap)
+            .reduce((total, outputAmount) => total + outputAmount)
+
+
+        if (amount !== outputTotal) {
+            console.log(`Transaction with ID ${id} has different input and output amount`)
+            return false
+        }
+
+        if (!verifySignature({
+            publicKey: address,
+            data: outputMap,
+            signature
+        })) {
+            console.log(`Transaction with ID ${id} has an invalid signature`)
+            return false
+        }
+
+        return true
     }
 }

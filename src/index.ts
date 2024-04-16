@@ -1,6 +1,6 @@
 import express, {Request, Response} from 'express';
 import {Blockchain} from "./blockchain";
-import { PubSub } from "./pubsub";
+import { Net } from "./net";
 import {syncChain} from "./chain";
 
 const app = express();
@@ -13,7 +13,7 @@ app.use(express.json());
 const blockchain: Blockchain = new Blockchain()
 
 
-const ps: PubSub = new PubSub({ blockchain })
+const ps: Net = new Net({ blockchain })
 
 setTimeout(async () => {
     await ps.broadcastChain()

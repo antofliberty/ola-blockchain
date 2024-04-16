@@ -16,7 +16,6 @@ describe('Transaction', () => {
         amount = 100
 
         transaction = new Transaction({ sender, recipient, amount })
-
     })
 
     it('Has an id', () => {
@@ -44,5 +43,37 @@ describe('Transaction', () => {
         it('Has an input', () => {
             expect(transaction.input).toHaveProperty('timestamp')
         });
+    })
+
+    describe('valid()', () => {
+
+        sender = new Wallet()
+        recipient = 'recipient'
+        amount = 100
+
+        transaction = new Transaction({ sender, recipient, amount })
+
+        describe('When TX is valid', () => {
+
+            expect(transaction.validate(transaction)).toBe(true)
+        })
+
+        describe('When TX is not valid', () => {
+            describe('OutputMap is invalid', () => {
+                it('Returns false', () => {
+                    transaction.outputMap[sender.publicKey] = 999
+
+                    expect(transaction.validate(transaction)).toBe(false)
+                });
+
+            })
+            describe('Signature is invalid', () => {
+                it('Returns false', () => {
+                    transaction.input.signature = new Wallet().sign('badData')
+
+                    expect(transaction.validate(transaction)).toBe(false)
+                })
+            })
+        })
     })
 })

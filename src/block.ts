@@ -2,7 +2,7 @@ import {GENESIS_DATA, MINE_RATE} from "./config";
 import {createHash} from "./crypto";
 import {hexToBinary} from "./utils";
 
-export interface BlockConstructorArgs {
+export type BlockConstructorArgs = {
     timestamp: number
     lastHash: string
     hash: string

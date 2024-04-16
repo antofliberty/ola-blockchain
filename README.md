@@ -13,7 +13,12 @@ Installation
 yarn
 ```
 
-Running demo
+Running simulation
+```
+yarn simulation
+```
+
+Starting node
 ```
 yarn start
 ```
