@@ -76,4 +76,50 @@ describe('Transaction', () => {
             })
         })
     })
+
+    describe('update()', () => {
+
+        let originalSignature: string
+        let originalSenderOutput: number
+        let nextRecipient: string
+        let nextAmount: Amount
+
+        describe('Amount is valid', () => {
+            it('Throws TransactionError', () => {
+
+            });
+        })
+
+        beforeEach(() => {
+            originalSignature = transaction.input.signature
+            originalSenderOutput = transaction.outputMap[sender.publicKey]
+            nextRecipient = 'nextRecipient'
+            nextAmount = 50
+
+            transaction.update({ sender, recipient: nextRecipient, amount: nextAmount })
+        })
+
+        it('Outputs the amount to the next recipient', () => {
+            expect(transaction.outputMap[nextRecipient])
+        });
+
+        it('Subtract the amount from the original sender output amount', () => {
+            expect(transaction.outputMap[sender.publicKey]).toEqual(originalSenderOutput - nextAmount)
+        });
+
+        it('Maintains a total output that matches the input amount', () => {
+            expect(
+                Object.values(transaction.outputMap)
+                    .reduce(
+                        (total, outputAmount) => total + outputAmount)
+            ).toEqual(transaction.input.amount)
+
+        });
+
+        it('Resigns the transaction', () => {
+            expect(transaction.input.signature).not.toEqual(originalSignature)
+        });
+
+
+    })
 })

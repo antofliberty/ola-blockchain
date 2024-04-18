@@ -77,4 +77,11 @@ export class Transaction {
 
         return true
     }
+
+    update({ sender, recipient, amount }: OutputMapArgs) {
+        this.outputMap[recipient] = amount
+        this.outputMap[sender.publicKey] -= amount
+
+        this.input = this.createInput({ sender, outputMap: this.outputMap })
+    }
 }
