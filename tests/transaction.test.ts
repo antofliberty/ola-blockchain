@@ -7,8 +7,8 @@ describe('Transaction', () => {
 
     let transaction: Transaction
     let sender: Wallet
-    let recipient: string
-    let amount: number
+    let recipient: Address
+    let amount: Amount
 
     beforeEach(() => {
         sender = new Wallet()

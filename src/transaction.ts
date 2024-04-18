@@ -5,15 +5,15 @@ import {verifySignature} from "./utils";
 type OutputMapArgs = {
     sender: Wallet,
     recipient: string,
-    amount: number
+    amount: Amount
 }
 
 type TransactionConstructorArgs = OutputMapArgs
 
 type TransactionInput =  {
     timestamp: number,
-    amount: number,
-    address: string,
+    amount: Amount,
+    address: Address,
     signature: string
 }
 

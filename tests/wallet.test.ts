@@ -1,7 +1,8 @@
-import {Wallet, WalletError} from "../src/wallet";
+import {Wallet} from "../src/wallet";
 import {describe, expect} from "@jest/globals";
 import {verifySignature} from "../src/utils";
 import {Transaction} from "../src/transaction";
+import {OlaError} from "../src/errors";
 
 describe('Wallet', (): void => {
     let wallet: Wallet
@@ -45,8 +46,8 @@ describe('Wallet', (): void => {
         describe('Amount', () => {
 
             let transaction: Transaction
-            let amount: number
-            let recipient: string
+            let amount: Amount
+            let recipient: Address
 
             beforeEach(() => {
                 amount = 50
@@ -57,7 +58,7 @@ describe('Wallet', (): void => {
             it('Throws WalletError when amount is higher than wallet balance', () => {
                 expect(() => {
                     wallet.createTransaction({ amount: 9999, recipient: 'testRecipient' });
-                }).toThrow(WalletError)
+                }).toThrow(OlaError)
             });
 
             it('Input address equals to wallet pubKey', () => {

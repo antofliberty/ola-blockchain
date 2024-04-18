@@ -2,11 +2,11 @@ import { INITIAL_BALANCE } from "./config"
 import {ec} from "./crypto"
 import {createHash} from "./crypto";
 import {OutputMap, Transaction} from "./transaction";
-
+import {INSUFFICIENT_FUNDS_ERROR, OlaError} from "./errors";
 
 export class Wallet {
     publicKey: string
-    balance: number
+    balance: Balance
     private keyPair
 
     constructor() {
@@ -23,27 +23,11 @@ export class Wallet {
 
     createTransaction({ amount, recipient }: { amount: number, recipient: string }): Transaction {
         if (amount > this.balance) {
-            throw new WalletError(INSUFFICIENT_FUNDS_ERROR)
+            throw new OlaError(INSUFFICIENT_FUNDS_ERROR)
         }
 
         return new Transaction({ sender: this, amount, recipient })
     }
 }
 
-type OlaBlockchainError = {
-    code: number,
-    message : string
-}
 
-const INSUFFICIENT_FUNDS_ERROR: OlaBlockchainError = { code: 101, message: '' }
-
-export class WalletError extends Error {
-    errorCode: number;
-
-    constructor(error: OlaBlockchainError) {
-        super(error.message);
-        this.name = "WalletError";
-        this.errorCode = error.code;
-        Object.setPrototypeOf(this, WalletError.prototype);
-    }
-}
