@@ -1,4 +1,4 @@
-import {BlockConstructorArgs} from "./block"
+import {BlockConstructorArgs} from "./types";
 
 export const INITIAL_DIFFICULTY: number = 10 // Must be >= 3
 export const MINE_RATE: number = 3000

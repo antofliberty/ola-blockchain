@@ -1,5 +1,5 @@
-import {Blockchain} from "./blockchain";
-import Block from "./block";
+import {Blockchain} from "./blockchain"
+import {Block} from "./block"
 // import {APP_PORT} from "./index";
 
 const ROOT_NODE_URL = `http://localhost:${4000}`

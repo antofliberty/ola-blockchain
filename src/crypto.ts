@@ -6,7 +6,7 @@ export const ec = new EC('secp256k1')
 
 export function createHash(...inputs: any[]): string {
     const hash: crypto.Hash = crypto.createHash('sha256')
-    hash.update(inputs.map(input => JSON.stringify(input)).join(''))
+    hash.update(inputs.sort().map(input => typeof input === 'object' ? JSON.stringify(input) : input).join(''))
 
     return hash.digest('hex')
 }

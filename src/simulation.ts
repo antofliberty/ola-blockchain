@@ -1,5 +1,5 @@
 import {Blockchain} from "./blockchain";
-import Block from "./block";
+import {Block} from "./block";
 
 const SIMULATION_ITERATIONS: number = 20
 

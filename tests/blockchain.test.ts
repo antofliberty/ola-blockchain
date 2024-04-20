@@ -1,21 +1,21 @@
 import {describe, expect} from "@jest/globals";
 import {Blockchain} from "../src/blockchain";
-import Block from "../src/block";
+import {Block} from "../src/block";
 import {createHash} from "../src/crypto";
 import {INITIAL_DIFFICULTY} from "../src/config";
 
 
-describe('isValidChain()', (): void => {
+describe('isValidChain()', () => {
 
     const blockchain: Blockchain = new Blockchain();
 
-    it('Chain does not starts with genesis block', (): void => {
+    it('Chain does not starts with genesis block', () => {
         blockchain.chain[0].hash = 'incorrect_hash'
 
         expect(blockchain.isValidChain(blockchain.chain)).toBe(false)
     })
 
-    it('Chain is valid', (): void => {
+    it('Chain is valid', () => {
         blockchain.chain[0] = Block.genesis()
         blockchain.chain[1] = Block.mineBlock({
             lastBlock: blockchain.chain[0],
@@ -25,7 +25,7 @@ describe('isValidChain()', (): void => {
         expect(blockchain.isValidChain(blockchain.chain)).toEqual(true)
     })
 
-    it('Prevents difficulty jump', (): void => {
+    it('Prevents difficulty jump', () => {
 
         const timestamp: number = Date.now()
         const data: string = 'newData'
@@ -47,8 +47,8 @@ describe('isValidChain()', (): void => {
 
 })
 
-describe('blockchainManipulation', (): void => {
-    it('Pushes the block correctly', (): void => {
+describe('blockchainManipulation', () => {
+    it('Pushes the block correctly', () => {
         const blockchain: Blockchain = new Blockchain();
         blockchain.pushBlock({ data: 'newBlock' })
 
@@ -73,7 +73,7 @@ describe('blockchainManipulation', (): void => {
         expect(blockchain.replaceChain(newWrongChain)).toEqual(false)
     });
 
-    it('Does not replace the chain', (): void => {
+    it('Does not replace the chain', () => {
         const blockchain: Blockchain = new Blockchain();
         blockchain.pushBlock({
             data: 'newCorrectBlock'

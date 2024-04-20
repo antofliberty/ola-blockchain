@@ -1,6 +1,8 @@
-import {Transaction} from "../src/transaction";
-import {describe, expect} from "@jest/globals";
-import {Wallet} from "../src/wallet";
+import {Transaction} from "../src/transaction"
+import {describe, expect} from "@jest/globals"
+import {Wallet} from "../src/wallet"
+import {OlaError} from "../src/errors"
+import {Amount, Address} from "../src/types";
 
 
 describe('Transaction', () => {
@@ -20,29 +22,29 @@ describe('Transaction', () => {
 
     it('Has an id', () => {
         expect(transaction).toHaveProperty('id')
-    });
+    })
 
     describe('outputMap', () => {
         it('Has an output map', () => {
             expect(transaction).toHaveProperty('outputMap')
-        });
+        })
 
         it('Outputs the amount to the recipient', () => {
             expect(transaction.outputMap[recipient]).toEqual(amount)
-        });
+        })
 
         it('Outputs the remaining balance for the sender wallet', () => {
             expect(transaction.outputMap[recipient]).toEqual(amount)
-        });
+        })
     })
 
     describe('input', () => {
         it('Has an input', () => {
             expect(transaction).toHaveProperty('input')
-        });
+        })
         it('Has an input', () => {
             expect(transaction.input).toHaveProperty('timestamp')
-        });
+        })
     })
 
     describe('valid()', () => {
@@ -64,7 +66,7 @@ describe('Transaction', () => {
                     transaction.outputMap[sender.publicKey] = 999
 
                     expect(transaction.validate(transaction)).toBe(false)
-                });
+                })
 
             })
             describe('Signature is invalid', () => {
@@ -81,13 +83,15 @@ describe('Transaction', () => {
 
         let originalSignature: string
         let originalSenderOutput: number
-        let nextRecipient: string
+        let nextRecipient: Address
         let nextAmount: Amount
 
         describe('Amount is valid', () => {
             it('Throws TransactionError', () => {
-
-            });
+                expect(() => {
+                    transaction.update({ sender, recipient: '228', amount: 99999 })
+                }).toThrow(OlaError)
+            })
         })
 
         beforeEach(() => {
@@ -101,11 +105,11 @@ describe('Transaction', () => {
 
         it('Outputs the amount to the next recipient', () => {
             expect(transaction.outputMap[nextRecipient])
-        });
+        })
 
         it('Subtract the amount from the original sender output amount', () => {
             expect(transaction.outputMap[sender.publicKey]).toEqual(originalSenderOutput - nextAmount)
-        });
+        })
 
         it('Maintains a total output that matches the input amount', () => {
             expect(
@@ -114,11 +118,11 @@ describe('Transaction', () => {
                         (total, outputAmount) => total + outputAmount)
             ).toEqual(transaction.input.amount)
 
-        });
+        })
 
         it('Resigns the transaction', () => {
             expect(transaction.input.signature).not.toEqual(originalSignature)
-        });
+        })
 
 
     })

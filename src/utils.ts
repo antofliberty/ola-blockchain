@@ -1,5 +1,5 @@
-import {createHash, ec} from "./crypto";
-import {OutputMap} from "./transaction";
+import {createHash, ec} from "./crypto"
+import {VerifySignatureArgs} from "./types";
 
 export function hexToBinary(hexString: string): string {
     // A map of hex digit to binary string
@@ -18,18 +18,12 @@ export function hexToBinary(hexString: string): string {
     for (const hexDigit of hexString) {
         const binaryDigits = hexToBinMap[hexDigit];
         if (binaryDigits === undefined) {
-            throw new Error(`Invalid hexadecimal character: ${hexDigit}`);
+            throw new Error(`Invalid hexadecimal character: ${hexDigit}`)
         }
         binaryString += binaryDigits;
     }
 
     return binaryString;
-}
-
-type VerifySignatureArgs = {
-    publicKey: string,
-    data: OutputMap | string,
-    signature: string
 }
 
 export function verifySignature({ publicKey, data, signature }: VerifySignatureArgs) {

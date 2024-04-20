@@ -1,17 +1,10 @@
 import {GENESIS_DATA, MINE_RATE} from "./config";
 import {createHash} from "./crypto";
 import {hexToBinary} from "./utils";
+import {BlockConstructorArgs} from "./types";
 
-export type BlockConstructorArgs = {
-    timestamp: number
-    lastHash: string
-    hash: string
-    data: string
-    nonce: number
-    difficulty: number
-}
 
-class Block {
+export class Block {
     timestamp: number
     private data: string
     lastHash: string
@@ -72,4 +65,3 @@ class Block {
     }
 }
 
-export default Block

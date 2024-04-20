@@ -3,8 +3,9 @@ import {describe, expect} from "@jest/globals";
 import {verifySignature} from "../src/utils";
 import {Transaction} from "../src/transaction";
 import {OlaError} from "../src/errors";
+import {Amount, Address} from "../src/types";
 
-describe('Wallet', (): void => {
+describe('Wallet', () => {
     let wallet: Wallet
 
     beforeEach(() => {
@@ -20,7 +21,7 @@ describe('Wallet', (): void => {
         expect(wallet).toHaveProperty('publicKey')
     });
 
-    describe('Signing data', (): void => {
+    describe('Signing data', () => {
         it('Signs data', () => {
             const data = 'testData'
 

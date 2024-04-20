@@ -1,5 +1,5 @@
-import {describe, expect} from "@jest/globals";
-import {createHash} from "../src/crypto";
+import {describe, expect} from "@jest/globals"
+import {createHash} from "../src/crypto"
 
 
 describe('createHash()', () => {

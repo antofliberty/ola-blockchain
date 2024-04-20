@@ -1,8 +1,9 @@
 import { INITIAL_BALANCE } from "./config"
 import {ec} from "./crypto"
 import {createHash} from "./crypto";
-import {OutputMap, Transaction} from "./transaction";
+import {Transaction} from "./transaction";
 import {INSUFFICIENT_FUNDS_ERROR, OlaError} from "./errors";
+import {Balance, OutputMap} from "./types";
 
 export class Wallet {
     publicKey: string

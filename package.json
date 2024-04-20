@@ -10,7 +10,8 @@
   "scripts": {
     "simulation": "npx ts-node src/simulation.ts",
     "test": "jest",
-    "start": "nodemon src/index.ts"
+    "start": "nodemon src/index.ts",
+    "lint": "eslint src/**/*.ts"
   },
   "dependencies": {
     "elliptic": "^6.5.5",
@@ -28,6 +29,6 @@
     "nodemon": "^3.1.0",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.4"
+    "typescript": "*"
   }
 }

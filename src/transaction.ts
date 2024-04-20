@@ -1,25 +1,8 @@
-import {randomUUID} from "crypto";
-import {Wallet} from "./wallet";
-import {verifySignature} from "./utils";
-
-type OutputMapArgs = {
-    sender: Wallet,
-    recipient: string,
-    amount: Amount
-}
-
-type TransactionConstructorArgs = OutputMapArgs
-
-type TransactionInput =  {
-    timestamp: number,
-    amount: Amount,
-    address: Address,
-    signature: string
-}
-
-export type OutputMap = {
-    [key: string]: number,
-}
+import {randomUUID} from "crypto"
+import {Wallet} from "./wallet"
+import {verifySignature} from "./utils"
+import {OlaError, TRANSACTION_UPDATE_AMOUNT_ERROR} from "./errors"
+import {OutputMap, OutputMapArgs, TransactionConstructorArgs, TransactionInput} from "./types";
 
 export class Transaction {
     public id: string
@@ -34,7 +17,7 @@ export class Transaction {
             amount
         })
 
-        this.input = this.createInput({ sender, outputMap: this.outputMap });
+        this.input = this.createInput({ sender, outputMap: this.outputMap })
     }
 
     createOutputMap({ sender, recipient, amount }: OutputMapArgs): OutputMap {
@@ -78,10 +61,16 @@ export class Transaction {
         return true
     }
 
-    update({ sender, recipient, amount }: OutputMapArgs) {
+    update({ sender, recipient, amount }: OutputMapArgs): boolean {
+        if (amount > this.outputMap[sender.publicKey]) {
+            throw new OlaError(TRANSACTION_UPDATE_AMOUNT_ERROR)
+        }
+
         this.outputMap[recipient] = amount
         this.outputMap[sender.publicKey] -= amount
 
         this.input = this.createInput({ sender, outputMap: this.outputMap })
+
+        return true
     }
 }
