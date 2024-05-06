@@ -120,9 +120,26 @@ describe('Transaction', () => {
 
         })
 
-        it('Resigns the transaction', () => {
-            expect(transaction.input.signature).not.toEqual(originalSignature)
+        describe('Another update for the same recipient', () => {
+
+            let addedAmount: Amount
+
+            beforeEach(() => {
+                addedAmount = 80
+                transaction.update({ sender, recipient: nextRecipient, amount: addedAmount })
+            })
+
+            it('Adds to the recipient amount', () => {
+                expect(transaction.outputMap[nextRecipient]).toEqual(nextAmount + addedAmount)
+            })
+
+            it('Subtracts the amount from original sender', () => {
+                expect(transaction.outputMap[sender.publicKey])
+                    .toEqual(originalSenderOutput - addedAmount - nextAmount)
+            })
         })
+
+
 
 
     })

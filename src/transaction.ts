@@ -66,7 +66,12 @@ export class Transaction {
             throw new OlaError(TRANSACTION_UPDATE_AMOUNT_ERROR)
         }
 
-        this.outputMap[recipient] = amount
+        if (!this.outputMap[recipient]) {
+            this.outputMap[amount] = amount
+        } else {
+            this.outputMap[amount] = this.outputMap[recipient] + amount
+        }
+
         this.outputMap[sender.publicKey] -= amount
 
         this.input = this.createInput({ sender, outputMap: this.outputMap })
